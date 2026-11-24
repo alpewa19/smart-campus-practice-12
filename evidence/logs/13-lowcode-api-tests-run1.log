@@ -1,0 +1,13 @@
+PASS T1 expected=AVAILABLE observed=AVAILABLE Available: Cedar 101 is free from 15:00 to 16:00.
+PASS T2 expected=OVERLAP observed=OVERLAP Unavailable: the request overlaps booking B1 (10:00–11:00).
+PASS T3 expected=ROOM_BLOCKED observed=ROOM_BLOCKED Unavailable: Cedar 101 is blocked and cannot be booked.
+PASS T4 expected=INVALID_DURATION observed=INVALID_DURATION Duration must be a whole number of minutes from 1 to 120.
+PASS T5 expected=INVALID_DURATION observed=INVALID_DURATION Duration must be a whole number of minutes from 1 to 120.
+PASS T6 expected=PAST_START observed=PAST_START Start time must be later than the current time (09:00).
+PASS T7 expected=AVAILABLE observed=AVAILABLE Available: Cedar 101 is free from 11:00 to 13:00.
+PASS S1 expected=INVALID_START observed=INVALID_START Enter the start time as HH:MM (24-hour clock).
+PASS S2 expected=INVALID_DURATION observed=INVALID_DURATION Duration must be a whole number of minutes from 1 to 120.
+PASS S3 expected=ENDS_AFTER_DAY observed=ENDS_AFTER_DAY The booking must end by 24:00 on the same day.
+PASS S4 expected=INVALID_START observed=INVALID_START Enter the start time as HH:MM (24-hour clock).
+PASS T8 expected=bookings unchanged observed=unchanged 
+passed 12/12

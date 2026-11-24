@@ -1,0 +1,14 @@
+$ npm test   (before src/ exists)
+ℹ todo 0
+ℹ duration_ms 86.272333
+
+✖ failing tests:
+
+test at tests/contract.test.js:1:1
+✖ tests/contract.test.js (78.766125ms)
+  'test failed'
+
+test at tests/units.test.js:1:1
+✖ tests/units.test.js (76.124292ms)
+  'test failed'
+exit=1

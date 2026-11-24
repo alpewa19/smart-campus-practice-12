@@ -1,0 +1,5 @@
+# Fix 3 (R4): fictional data moved from flow context (loaded 0.2 s after start) to flow env variables
+# Retest: fresh server, requests fired from the moment the port opens
+port 1880 free
+request 10:30 + 60 min (expected OVERLAP); answers in arrival order [code, count]: [['no-connection', 298], ['OVERLAP', 300]]
+24 Nov 22:58:06 - [info] Server now running at http://127.0.0.1:1880/

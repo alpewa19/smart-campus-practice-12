@@ -1,0 +1,13 @@
+224c224
+<         "storeOutMessages": true,
+---
+>         "storeOutMessages": false,
+736,737c736,740
+<         "includeClientData": false,
+<         "acceptsClientConfig": [],
+---
+>         "includeClientData": true,
+>         "acceptsClientConfig": [
+>             "ui-template",
+>             "ui-form"
+>         ],

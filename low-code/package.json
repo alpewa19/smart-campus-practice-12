@@ -1,0 +1,13 @@
+{
+  "name": "smart-campus-low-code",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Practice 12: low-code Smart Campus room availability checker built in Node-RED + FlowFuse Dashboard 2.0",
+  "scripts": {
+    "start": "NODE_ENV=production node-red --settings ./settings.js --userDir . flows.json"
+  },
+  "dependencies": {
+    "node-red": "5.0.9",
+    "@flowfuse/node-red-dashboard": "1.36.0"
+  }
+}

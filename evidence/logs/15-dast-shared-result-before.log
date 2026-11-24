@@ -1,0 +1,4 @@
+B before A submits: Available: Cedar 101 is free from 11:00 to 13:00.
+A after its own submit: Available: Cedar 101 is free from 16:45 to 17:00.
+B after A submits: Available: Cedar 101 is free from 16:45 to 17:00.
+B typed nothing; shared result visible to B = true

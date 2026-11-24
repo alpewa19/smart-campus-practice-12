@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'" />
+    <title>Smart Campus — Room Availability (code-based)</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="page">
+      <header>
+        <p class="eyebrow">Smart Campus · code-based version</p>
+        <h1>Room Availability Checker</h1>
+        <p class="subtitle">Fictional data only. A check never creates or changes a booking.</p>
+      </header>
+
+      <section class="card" aria-labelledby="room-title">
+        <div class="room-head">
+          <h2 id="room-title">Cedar 101</h2>
+          <label class="toggle"><input type="checkbox" id="blocked" /> Room blocked</label>
+        </div>
+        <p class="clock">Demo clock: now = <strong id="now"></strong></p>
+        <h3>Existing bookings</h3>
+        <ul id="bookings" class="bookings"></ul>
+      </section>
+
+      <section class="card" aria-labelledby="form-title">
+        <h2 id="form-title">Check a time slot</h2>
+        <form id="check-form" novalidate>
+          <div class="grid">
+            <label>Start time (HH:MM)
+              <input id="start" name="start" type="text" inputmode="numeric" autocomplete="off" placeholder="15:00" />
+            </label>
+            <label>Duration (minutes, 1–120)
+              <input id="duration" name="duration" type="text" inputmode="numeric" autocomplete="off" placeholder="60" />
+            </label>
+          </div>
+          <button type="submit">Check availability</button>
+        </form>
+        <div id="result" class="result" role="status" aria-live="polite" hidden>
+          <p class="verdict" id="verdict"></p>
+          <p id="message"></p>
+          <p class="code">Reason code: <code id="code"></code></p>
+        </div>
+      </section>
+    </main>
+    <script type="module" src="src/ui.js"></script>
+  </body>
+</html>

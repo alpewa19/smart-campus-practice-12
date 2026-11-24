@@ -1,0 +1,3 @@
+# R4 retest: the previous probe hit the old server (port 1880 was still busy, see 12d log). This run waits until the port is free.
+
+# INVALID RUN: the wait loop never ended because pkill did not stop Node-RED (it renames its process). Valid rerun: 32-verify-r4-and-direct-start.log

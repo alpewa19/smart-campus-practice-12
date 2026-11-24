@@ -1,0 +1,63 @@
+$ npm test
+
+> vite-starter@0.0.0 test
+> node --test *.test.js
+
+✔ AC1 valid window is available (1.54125ms)
+✔ AC1 start >= end is rejected (0.102625ms)
+✔ AC1 start > end (reversed) is rejected (0.062583ms)
+✔ AC1 end > 1440 is rejected (0.051833ms)
+✔ AC1 start <= now is rejected (0.060292ms)
+✔ AC1 start in the past (before now) is rejected (0.047792ms)
+✔ AC1 now out of range (1440) is rejected (0.044917ms)
+✔ AC1 now negative is rejected (0.04325ms)
+✔ AC2 duration exactly 120 is allowed (0.067959ms)
+✔ AC2 duration 121 is rejected (0.105333ms)
+✔ availability duration limit is exported as the shared feature contract (0.068666ms)
+✔ AC3 blocked room is rejected (0.054917ms)
+✔ AC4 overlap is rejected (0.147833ms)
+✔ AC4 touching on the left side is allowed (0.060334ms)
+✔ AC4 touching on the right side is allowed (0.065459ms)
+✔ AC4 fully inside existing booking is rejected (0.057375ms)
+✔ AC5 available result includes a reason (0.086709ms)
+✔ AC5 unavailable result includes a reason (0.040167ms)
+✔ AC5 bookings array is unchanged after accepted request (0.4095ms)
+✔ AC5 bookings array is unchanged after rejected request (0.100875ms)
+✔ AC5 booking order is preserved after rejected request (0.058042ms)
+✔ parseStrictInt rejects fractional input (0.072416ms)
+✔ parseStrictInt rejects blank input (0.0335ms)
+✔ parseStrictInt rejects non-finite input (0.077ms)
+✔ parseStrictInt accepts valid integer string (0.118666ms)
+✔ parseStrictInt accepts valid integer (0.030625ms)
+✔ parseStrictInt rejects null (0.024ms)
+✔ parseStrictInt rejects undefined (0.0235ms)
+✔ parseMinuteInput rejects empty and overly long input (0.0375ms)
+✔ parseMinuteInput accepts the full minute range (0.059792ms)
+✔ AC1 end=1440 is allowed (0.028959ms)
+✔ AC1 rejects decimal text that rounds to a whole minute (0.043958ms)
+✔ AC1 rejects a nonzero fraction that underflows to zero (0.047959ms)
+✔ AC1 accepts exact whole minutes written with a decimal or exponent (0.03525ms)
+✔ AC1 direct availability rejects fractional start (0.026041ms)
+✔ AC1 direct availability rejects non-finite end (0.024708ms)
+✔ AC1 direct availability rejects non-finite now (0.027542ms)
+✔ AC1 direct availability requires numeric minutes (0.022292ms)
+✔ context contains only the structured facts required by the contract (2.115459ms)
+✔ context rejects empty, malformed, and oversized room labels (0.242042ms)
+✔ mock adapter explains only the deterministic available result (0.271417ms)
+✔ mock adapter explains blocked and overlap results from reason codes (0.130333ms)
+✔ duration explanation uses the checker duration limit (0.161ms)
+✔ response validator rejects blank, malformed, long, and multi-sentence output (0.148208ms)
+✔ service returns validated mock explanation (0.241917ms)
+✔ API errors and unavailable keys produce a deterministic safe fallback (0.215417ms)
+✔ adapter timeout produces the same safe fallback (4.861917ms)
+✔ invalid adapter output is discarded and cannot change the availability decision (0.329125ms)
+✔ context and explanation remain bounded (0.132333ms)
+ℹ tests 49
+ℹ suites 0
+ℹ pass 49
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 98.53275
+exit=0

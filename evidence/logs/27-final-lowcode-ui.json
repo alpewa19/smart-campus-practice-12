@@ -1,0 +1,193 @@
+{
+  "passed": 12,
+  "total": 12,
+  "dialogs": [],
+  "mobileHorizontalOverflow": false,
+  "rows": [
+    {
+      "id": "T1",
+      "input": {
+        "start": "15:00",
+        "duration": "60",
+        "blocked": false
+      },
+      "expected": "AVAILABLE",
+      "observed": {
+        "verdict": "Available",
+        "code": "AVAILABLE",
+        "message": "Available: Cedar 101 is free from 15:00 to 16:00.",
+        "imgs": 0
+      },
+      "pass": true
+    },
+    {
+      "id": "T2",
+      "input": {
+        "start": "10:30",
+        "duration": "60",
+        "blocked": false
+      },
+      "expected": "OVERLAP",
+      "observed": {
+        "verdict": "Unavailable",
+        "code": "OVERLAP",
+        "message": "Unavailable: the request overlaps booking B1 (10:00–11:00).",
+        "imgs": 0
+      },
+      "pass": true
+    },
+    {
+      "id": "T3",
+      "input": {
+        "start": "15:00",
+        "duration": "60",
+        "blocked": true
+      },
+      "expected": "ROOM_BLOCKED",
+      "observed": {
+        "verdict": "Unavailable",
+        "code": "ROOM_BLOCKED",
+        "message": "Unavailable: Cedar 101 is blocked and cannot be booked.",
+        "imgs": 0
+      },
+      "pass": true
+    },
+    {
+      "id": "T4",
+      "input": {
+        "start": "15:00",
+        "duration": "0",
+        "blocked": false
+      },
+      "expected": "INVALID_DURATION",
+      "observed": {
+        "verdict": "Unavailable",
+        "code": "INVALID_DURATION",
+        "message": "Duration must be a whole number of minutes from 1 to 120.",
+        "imgs": 0
+      },
+      "pass": true
+    },
+    {
+      "id": "T5",
+      "input": {
+        "start": "15:00",
+        "duration": "121",
+        "blocked": false
+      },
+      "expected": "INVALID_DURATION",
+      "observed": {
+        "verdict": "Unavailable",
+        "code": "INVALID_DURATION",
+        "message": "Duration must be a whole number of minutes from 1 to 120.",
+        "imgs": 0
+      },
+      "pass": true
+    },
+    {
+      "id": "T6",
+      "input": {
+        "start": "08:00",
+        "duration": "30",
+        "blocked": false
+      },
+      "expected": "PAST_START",
+      "observed": {
+        "verdict": "Unavailable",
+        "code": "PAST_START",
+        "message": "Start time must be later than the current time (09:00).",
+        "imgs": 0
+      },
+      "pass": true
+    },
+    {
+      "id": "T7",
+      "input": {
+        "start": "11:00",
+        "duration": "120",
+        "blocked": false
+      },
+      "expected": "AVAILABLE",
+      "observed": {
+        "verdict": "Available",
+        "code": "AVAILABLE",
+        "message": "Available: Cedar 101 is free from 11:00 to 13:00.",
+        "imgs": 0
+      },
+      "pass": true
+    },
+    {
+      "id": "S1",
+      "input": {
+        "start": "<img src=x onerror=alert(1)>",
+        "duration": "60",
+        "blocked": false
+      },
+      "expected": "INVALID_START",
+      "observed": {
+        "verdict": "Unavailable",
+        "code": "INVALID_START",
+        "message": "Enter the start time as HH:MM (24-hour clock).",
+        "imgs": 0
+      },
+      "pass": true
+    },
+    {
+      "id": "S2",
+      "input": {
+        "start": "15:00",
+        "duration": "60.5",
+        "blocked": false
+      },
+      "expected": "INVALID_DURATION",
+      "observed": {
+        "verdict": "Unavailable",
+        "code": "INVALID_DURATION",
+        "message": "Duration must be a whole number of minutes from 1 to 120.",
+        "imgs": 0
+      },
+      "pass": true
+    },
+    {
+      "id": "S3",
+      "input": {
+        "start": "23:30",
+        "duration": "60",
+        "blocked": false
+      },
+      "expected": "ENDS_AFTER_DAY",
+      "observed": {
+        "verdict": "Unavailable",
+        "code": "ENDS_AFTER_DAY",
+        "message": "The booking must end by 24:00 on the same day.",
+        "imgs": 0
+      },
+      "pass": true
+    },
+    {
+      "id": "S4",
+      "input": {
+        "start": "",
+        "duration": "60",
+        "blocked": false
+      },
+      "expected": "INVALID_START",
+      "observed": {
+        "verdict": "Unavailable",
+        "code": "INVALID_START",
+        "message": "Enter the start time as HH:MM (24-hour clock).",
+        "imgs": 0
+      },
+      "pass": true
+    },
+    {
+      "id": "T8",
+      "expected": "bookings unchanged",
+      "observed": {
+        "before": "B1 · 10:00–11:00 · Fictional study group\nB2 · 13:00–14:30 · Fictional robotics club",
+        "after": "B1 · 10:00–11:00 · Fictional study group\nB2 · 13:00–14:30 · Fictional robotics club"
+      },
+      "pass": true
+    }
+  ]
+}

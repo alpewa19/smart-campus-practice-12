@@ -1,0 +1,26 @@
+--- before/settings.before	2026-11-24 22:54:25
++++ low-code/settings.js	2026-11-24 22:54:25
+@@ -1,4 +1,9 @@
+ // Node-RED settings for the Practice 12 low-code app. Local classroom demo only.
++
++// Production mode hides stack traces in HTTP error pages (D2). Set here, not in the npm
++// script, so it also applies when node-red is started directly or on Windows.
++process.env.NODE_ENV = 'production'
++
+ module.exports = {
+   uiHost: '127.0.0.1', // editor, dashboard and HTTP endpoints are reachable from this machine only
+   uiPort: 1880,
+--- before/pkg.before	2026-11-24 22:54:25
++++ low-code/package.json	2026-11-24 22:54:25
+@@ -4,7 +4,7 @@
+   "private": true,
+   "description": "Practice 12: low-code Smart Campus room availability checker built in Node-RED + FlowFuse Dashboard 2.0",
+   "scripts": {
+-    "start": "NODE_ENV=production node-red --settings ./settings.js --userDir . flows.json"
++    "start": "node-red --settings ./settings.js --userDir . flows.json"
+   },
+   "dependencies": {
+     "node-red": "5.0.9",
+
+# RESULT: setting process.env.NODE_ENV inside settings.js does NOT hide the stack trace (see 32-verify-r4-and-direct-start.log, part 2).
+# Node-RED creates its Express app before it reads settings.js. This change was reverted; NODE_ENV=production stays in the npm start script.

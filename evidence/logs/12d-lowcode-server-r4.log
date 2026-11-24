@@ -1,0 +1,24 @@
+
+> smart-campus-low-code@1.0.0 start
+> NODE_ENV=production node-red --settings ./settings.js --userDir . flows.json
+
+24 Nov 22:54:10 - [info] 
+
+Welcome to Node-RED
+===================
+
+24 Nov 22:54:10 - [info] Node-RED version: v5.0.9
+24 Nov 22:54:10 - [info] Node.js  version: v26.13.0
+24 Nov 22:54:10 - [info] Darwin 25.5.0 arm64 LE
+24 Nov 22:54:10 - [info] Palette editor disabled : user settings
+24 Nov 22:54:10 - [info] Loading palette nodes
+24 Nov 22:54:10 - [info] Settings file  : /Users/ruslanalpenov/kbtu/kbtu/output/practice12_lowcode_comparison/low-code/settings.js
+24 Nov 22:54:10 - [info] Context store  : 'default' [module=memory]
+24 Nov 22:54:10 - [info] User directory : /Users/ruslanalpenov/kbtu/kbtu/output/practice12_lowcode_comparison/low-code
+24 Nov 22:54:10 - [warn] Projects disabled : editorTheme.projects.enabled=false
+24 Nov 22:54:10 - [info] Flows file     : /Users/ruslanalpenov/kbtu/kbtu/output/practice12_lowcode_comparison/low-code/flows.json
+24 Nov 22:54:10 - [warn] Using unencrypted credentials
+24 Nov 22:54:10 - [error] Unable to listen on http://127.0.0.1:1880/
+24 Nov 22:54:10 - [error] Error: port in use
+
+# INVALID RUN: this server did not start (port in use). The probe that followed hit the previous server. See 32-* logs for the valid rerun.

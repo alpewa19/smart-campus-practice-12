@@ -1,0 +1,38 @@
+# Low-code regression after fix 1
+passed 12/12
+passed 12/12; dialogs=0; mobileOverflow=false
+
+# DAST probes against the local low-code endpoint (own instance only)
+$ curl -s -X POST http://127.0.0.1:1880/api/check -H 'content-type: application/json' -d '{bad json'  -w ' [HTTP %{http_code}]'
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Error</title>
+</head>
+<body>
+<pre>SyntaxError: Expected property name or &#39;}&#39; in JSON at position 1 (line 1 column 2)<br> &nbsp; &nbsp;at JSON.parse (&lt;anonymous&gt;)<br> &nbsp; &nbsp;at parse (/Users/ruslanalpenov/kbtu/kbtu/output/practice12_lowcode_comparison/low-code/node_modules/@node-red/editor-api/node_modules/body-parser/lib/types/json.js:96:19)<br> &nbsp; &nbsp;at /Users/ruslanalpenov/kbtu/kbtu/output/practice12_lowcode_comparison/low-code/node_modules/@node-red/editor-api/node_modules/body-parser/lib/read.js:128:18<br> &nbsp; &nbsp;at AsyncResource.runInAsyncScope (node:async_hooks:226:14)<br> &nbsp; &nbsp;at invokeCallback (/Users/ruslanalpenov/kbtu/kbtu/output/practice12_lowcode_comparison/low-code/node_modules/raw-body/index.js:238:16)<br> &nbsp; &nbsp;at done (/Users/ruslanalpenov/kbtu/kbtu/output/practice12_lowcode_comparison/low-code/node_modules/raw-body/index.js:227:7)<br> &nbsp; &nbsp;at IncomingMessage.onEnd (/Users/ruslanalpenov/kbtu/kbtu/output/practice12_lowcode_comparison/low-code/node_modules/raw-body/index.js:287:7)<br> &nbsp; &nbsp;at IncomingMessage.emit (node:events:514:20)<br> &nbsp; &nbsp;at endReadableNT (node:internal/streams/readable:2147:12)<br> &nbsp; &nbsp;at process.processTicksAndRejections (node:internal/process/task_queues:90:21)</pre>
+</body>
+</html>
+ [HTTP 400]
+$ curl -s -X POST http://127.0.0.1:1880/api/check -H 'content-type: application/json' -d '{"start":["15:00"],"duration":{"x":1}}' -w ' [HTTP %{http_code}]'
+{"available":false,"reasonCode":"INVALID_START","message":"Enter the start time as HH:MM (24-hour clock)."} [HTTP 200]
+$ curl -s -X POST http://127.0.0.1:1880/api/check -H 'content-type: application/json' -d '{"start":"15:00","duration":"1e2"}' -w ' [HTTP %{http_code}]'
+{"available":false,"reasonCode":"INVALID_DURATION","message":"Duration must be a whole number of minutes from 1 to 120."} [HTTP 200]
+$ curl -s -X POST http://127.0.0.1:1880/api/check -H 'content-type: application/json' -d '{"start":"15:00","duration":60,"blocked":"true"}' -w ' [HTTP %{http_code}]'
+{"available":true,"reasonCode":"AVAILABLE","message":"Available: Cedar 101 is free from 15:00 to 16:00."} [HTTP 200]
+$ curl -s -X POST http://127.0.0.1:1880/api/check -H 'content-type: application/json' -d '{"start":"15:00","duration":"60","__proto__":{"blocked":true}}' -w ' [HTTP %{http_code}]'
+{"available":true,"reasonCode":"AVAILABLE","message":"Available: Cedar 101 is free from 15:00 to 16:00."} [HTTP 200]
+$ python3 -c "print('{\"start\":\"' + 'A'*200000 + '\",\"duration\":\"60\"}')" | curl -s -X POST http://127.0.0.1:1880/api/check -H 'content-type: application/json' --data-binary @- -w ' [HTTP %{http_code}]' | tail -c 200
+{"available":false,"reasonCode":"INVALID_START","message":"Enter the start time as HH:MM (24-hour clock)."} [HTTP 200]
+$ curl -s -o /dev/null -w 'GET /flows without credentials -> HTTP %{http_code}' http://127.0.0.1:1880/flows
+GET /flows without credentials -> HTTP 200
+$ curl -s -o /dev/null -w 'GET /settings without credentials -> HTTP %{http_code}' http://127.0.0.1:1880/settings
+GET /settings without credentials -> HTTP 200
+$ curl -s -X POST http://127.0.0.1:1880/api/bookings -o /dev/null -w 'POST /api/bookings -> HTTP %{http_code}'
+POST /api/bookings -> HTTP 404
+$ curl -s http://127.0.0.1:1880/api/bookings
+[{"id":"B1","start":600,"end":660,"label":"Fictional study group"},{"id":"B2","start":780,"end":870,"label":"Fictional robotics club"}]
+$ lsof -nP -iTCP:1880 -sTCP:LISTEN | tail -n +2
+node    34769 ruslanalpenov   14u  IPv4 0x6268ac1cbc80f960      0t0  TCP 127.0.0.1:1880 (LISTEN)
+

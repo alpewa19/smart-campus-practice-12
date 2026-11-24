@@ -1,0 +1,15 @@
+$ npm install --ignore-scripts --no-fund
+
+added 373 packages, and audited 517 packages in 29s
+
+43 vulnerabilities (37 moderate, 6 high)
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues, run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+npm install --ignore-scripts --no-fund 2>&1  7.25s user 5.79s system 44% cpu 29.219 total
+exit=0

@@ -1,0 +1,143 @@
+--- flows-as-generated.json	2026-11-24 22:58:07
++++ flows.json (final)	2026-11-24 22:58:07
+@@ -1,15 +1,27 @@
+ [
+   {
+     "disabled": false,
++    "env": [
++      {
++        "name": "BOOKINGS",
++        "type": "json",
++        "value": "[{\"id\":\"B1\",\"start\":600,\"end\":660,\"label\":\"Fictional study group\"},{\"id\":\"B2\",\"start\":780,\"end\":870,\"label\":\"Fictional robotics club\"}]"
++      },
++      {
++        "name": "DEMO_NOW",
++        "type": "num",
++        "value": "540"
++      }
++    ],
+     "id": "tab_checker",
+-    "info": "Practice 12 low-code version of the Cedar 101 room availability checker. Same contract as the code-based version: contract/requirements.md.",
++    "info": "Practice 12 low-code version of the Cedar 101 room availability checker. Same contract as the code-based version: contract/requirements.md. Fictional data and the demo clock are flow environment variables: they exist before the first request arrives and no node can change them at runtime.",
+     "label": "Smart Campus checker",
+     "type": "tab"
+   },
+   {
+     "id": "cmt_data",
+     "info": "",
+-    "name": "1. Fictional data (read-only after start-up)",
++    "name": "1. Fictional data = flow env variables BOOKINGS, DEMO_NOW (read-only)",
+     "type": "comment",
+     "wires": [],
+     "x": 190,
+@@ -19,7 +31,7 @@
+   {
+     "crontab": "",
+     "id": "inj_load",
+-    "name": "Load fictional data on start",
++    "name": "Show room card on start",
+     "once": true,
+     "onceDelay": "0.2",
+     "props": [],
+@@ -37,34 +49,13 @@
+   },
+   {
+     "id": "chg_data",
+-    "name": "Set room, bookings, demo clock",
++    "name": "Room card data",
+     "rules": [
+-      {
+-        "p": "room",
+-        "pt": "flow",
+-        "t": "set",
+-        "to": "{\"name\":\"Cedar 101\"}",
+-        "tot": "json"
+-      },
+-      {
+-        "p": "bookings",
+-        "pt": "flow",
+-        "t": "set",
+-        "to": "[{\"id\":\"B1\",\"start\":600,\"end\":660,\"label\":\"Fictional study group\"},{\"id\":\"B2\",\"start\":780,\"end\":870,\"label\":\"Fictional robotics club\"}]",
+-        "tot": "json"
+-      },
+       {
+-        "p": "now",
+-        "pt": "flow",
+-        "t": "set",
+-        "to": "540",
+-        "tot": "num"
+-      },
+-      {
+         "p": "payload",
+         "pt": "msg",
+         "t": "set",
+-        "to": "{ \"now\": $flowContext(\"now\"), \"bookings\": $flowContext(\"bookings\") }",
++        "to": "{ \"now\": $env(\"DEMO_NOW\"), \"bookings\": $env(\"BOOKINGS\") }",
+         "tot": "jsonata"
+       }
+     ],
+@@ -220,7 +211,7 @@
+     "page": "",
+     "passthru": false,
+     "resendOnRefresh": false,
+-    "storeOutMessages": true,
++    "storeOutMessages": false,
+     "templateScope": "local",
+     "type": "ui-template",
+     "ui": "",
+@@ -339,8 +330,8 @@
+         "p": "payload",
+         "pt": "msg",
+         "t": "set",
+-        "to": "bookings",
+-        "tot": "flow"
++        "to": "$env(\"BOOKINGS\")",
++        "tot": "jsonata"
+       }
+     ],
+     "type": "change",
+@@ -447,7 +438,7 @@
+       },
+       {
+         "t": "jsonata_exp",
+-        "v": "startMin <= $flowContext(\"now\")",
++        "v": "startMin <= $env(\"DEMO_NOW\")",
+         "vt": "jsonata"
+       },
+       {
+@@ -607,7 +598,7 @@
+         "p": "overlap",
+         "pt": "msg",
+         "t": "set",
+-        "to": "($s := startMin; $e := endMin; $flowContext(\"bookings\")[start < $e and $s < end][0])",
++        "to": "($s := startMin; $e := endMin; $env(\"BOOKINGS\")[start < $e and $s < end][0])",
+         "tot": "jsonata"
+       }
+     ],
+@@ -702,7 +693,7 @@
+         "p": "payload",
+         "pt": "msg",
+         "t": "set",
+-        "to": "(\n  $fmt := function($m) { $pad($string($floor($m / 60)), -2, \"0\") & \":\" & $pad($string($m % 60), -2, \"0\") };\n  $code := reasonCode;\n  {\n    \"available\": $code = \"AVAILABLE\",\n    \"reasonCode\": $code,\n    \"message\":\n      $code = \"AVAILABLE\" ? \"Available: Cedar 101 is free from \" & $fmt(startMin) & \" to \" & $fmt(endMin) & \".\" :\n      $code = \"OVERLAP\" ? \"Unavailable: the request overlaps booking \" & overlap.id & \" (\" & $fmt(overlap.start) & \"–\" & $fmt(overlap.end) & \").\" :\n      $code = \"ROOM_BLOCKED\" ? \"Unavailable: Cedar 101 is blocked and cannot be booked.\" :\n      $code = \"INVALID_START\" ? \"Enter the start time as HH:MM (24-hour clock).\" :\n      $code = \"INVALID_DURATION\" ? \"Duration must be a whole number of minutes from 1 to 120.\" :\n      $code = \"PAST_START\" ? \"Start time must be later than the current time (\" & $fmt($flowContext(\"now\")) & \").\" :\n      \"The booking must end by 24:00 on the same day.\"\n  }\n)",
++        "to": "(\n  $fmt := function($m) { $pad($string($floor($m / 60)), -2, \"0\") & \":\" & $pad($string($m % 60), -2, \"0\") };\n  $code := reasonCode;\n  {\n    \"available\": $code = \"AVAILABLE\",\n    \"reasonCode\": $code,\n    \"message\":\n      $code = \"AVAILABLE\" ? \"Available: Cedar 101 is free from \" & $fmt(startMin) & \" to \" & $fmt(endMin) & \".\" :\n      $code = \"OVERLAP\" ? \"Unavailable: the request overlaps booking \" & overlap.id & \" (\" & $fmt(overlap.start) & \"–\" & $fmt(overlap.end) & \").\" :\n      $code = \"ROOM_BLOCKED\" ? \"Unavailable: Cedar 101 is blocked and cannot be booked.\" :\n      $code = \"INVALID_START\" ? \"Enter the start time as HH:MM (24-hour clock).\" :\n      $code = \"INVALID_DURATION\" ? \"Duration must be a whole number of minutes from 1 to 120.\" :\n      $code = \"PAST_START\" ? \"Start time must be later than the current time (\" & $fmt($env(\"DEMO_NOW\")) & \").\" :\n      \"The booking must end by 24:00 on the same day.\"\n  }\n)",
+         "tot": "jsonata"
+       }
+     ],
+@@ -728,12 +719,15 @@
+     "z": "tab_checker"
+   },
+   {
+-    "acceptsClientConfig": [],
++    "acceptsClientConfig": [
++      "ui-template",
++      "ui-form"
++    ],
+     "allowInstall": false,
+     "appIcon": "",
+     "headerContent": "page",
+     "id": "ui_base",
+-    "includeClientData": false,
++    "includeClientData": true,
+     "name": "Smart Campus",
+     "navigationStyle": "none",
+     "notificationDisplayTime": 1,

@@ -1,0 +1,6 @@
+$ git -C practice11 github-repo log -1
+81795b639a1ac126caefa2b47ab859bc99703de5 Add Smart Campus availability explanation prototype
+
+$ shasum -a 256 booking.js main.js
+c1370933029834f0a7bd1fab502cc8cd5a2b2a9ba80886dd1e7b14dc49729d75  booking.js
+8d6fdb132af6ffc533e9e32594db4a72b2e6d258d4203b62e529f0ac9bd471eb  main.js

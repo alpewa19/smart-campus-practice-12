@@ -1,0 +1,20 @@
+# 1) R4 start-up race: fresh server, requests fired from the moment the port opens
+request 10:30 + 60 min (expected OVERLAP); answers in arrival order [code, count]: [['no-connection', 389], ['AVAILABLE', 177], ['OVERLAP', 30]]
+24 Nov 22:57:15 - [info] Server now running at http://127.0.0.1:1880/
+24 Nov 22:57:15 - [info] Started flows
+
+# 2) D2 with a direct start (npx node-red, no NODE_ENV in the shell, NODE_ENV set in settings.js)
+$ ps -o command -p $(lsof -tiTCP:1880 -sTCP:LISTEN); env of shell: NODE_ENV=${NODE_ENV:-unset}
+NODE_ENV in this shell: unset
+$ curl -s -X POST http://127.0.0.1:1880/api/check -H 'content-type: application/json' -d '{bad json'
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Error</title>
+</head>
+<body>
+<pre>SyntaxError: Expected property name or &#39;}&#39; in JSON at position 1 (line 1 column 2)<br> &nbsp; &nbsp;at JSON.parse (&lt;anonymous&gt;)<br> &nbsp; &nbsp;at parse (/Users/ruslanalpenov/kbtu/kbtu/output/practice12_lowcode_comparison/low-code/node_modules/@node-red/editor-api/node_modules/body-parser/lib/types/json.js:96:19)<br> &nbsp; &nbsp;at /Users/ruslanalpenov/kbtu/kbtu/output/practice12_lowcode_comparison/low-code/node_modules/@node-red/editor-api/node_modules/body-parser/lib/read.js:128:18<br> &nbsp; &nbsp;at AsyncResource.runInAsyncScope (node:async_hooks:226:14)<br> &nbsp; &nbsp;at invokeCallback (/Users/ruslanalpenov/kbtu/kbtu/output/practice12_lowcode_comparison/low-code/node_modules/raw-body/index.js:238:16)<br> &nbsp; &nbsp;at done (/Users/ruslanalpenov/kbtu/kbtu/output/practice12_lowcode_comparison/low-code/node_modules/raw-body/index.js:227:7)<br> &nbsp; &nbsp;at IncomingMessage.onEnd (/Users/ruslanalpenov/kbtu/kbtu/output/practice12_lowcode_comparison/low-code/node_modules/raw-body/index.js:287:7)<br> &nbsp; &nbsp;at IncomingMessage.emit (node:events:514:20)<br> &nbsp; &nbsp;at endReadableNT (node:internal/streams/readable:2147:12)<br> &nbsp; &nbsp;at process.processTicksAndRejections (node:internal/process/task_queues:90:21)</pre>
+</body>
+</html>
+ [HTTP 400]

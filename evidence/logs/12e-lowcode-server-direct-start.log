@@ -1,0 +1,19 @@
+24 Nov 22:54:28 - [info] 
+
+Welcome to Node-RED
+===================
+
+24 Nov 22:54:28 - [info] Node-RED version: v5.0.9
+24 Nov 22:54:28 - [info] Node.js  version: v26.13.0
+24 Nov 22:54:28 - [info] Darwin 25.5.0 arm64 LE
+24 Nov 22:54:28 - [info] Palette editor disabled : user settings
+24 Nov 22:54:28 - [info] Loading palette nodes
+24 Nov 22:54:28 - [info] Settings file  : /Users/ruslanalpenov/kbtu/kbtu/output/practice12_lowcode_comparison/low-code/settings.js
+24 Nov 22:54:28 - [info] Context store  : 'default' [module=memory]
+24 Nov 22:54:28 - [info] User directory : /Users/ruslanalpenov/kbtu/kbtu/output/practice12_lowcode_comparison/low-code
+24 Nov 22:54:28 - [warn] Projects disabled : editorTheme.projects.enabled=false
+24 Nov 22:54:28 - [info] Flows file     : /Users/ruslanalpenov/kbtu/kbtu/output/practice12_lowcode_comparison/low-code/flows.json
+24 Nov 22:54:28 - [error] Unable to listen on http://127.0.0.1:1880/
+24 Nov 22:54:28 - [error] Error: port in use
+
+# INVALID RUN: this server did not start (port in use). The probe that followed hit the previous server. See 32-* logs for the valid rerun.

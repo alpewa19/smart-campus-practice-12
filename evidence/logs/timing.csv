@@ -1,0 +1,13 @@
+phase,event,time
+baseline,start,2026-11-24 22:41:10
+baseline,end,2026-11-24 22:42:50
+contract,start,2026-11-24 22:42:50
+contract,end,2026-11-24 22:43:14
+code-based,setup-start,2026-11-24 22:43:14
+code-based,implementation-and-test-end,2026-11-24 22:44:55
+low-code,setup-start,2026-11-24 22:44:55
+low-code,implementation-and-test-end,2026-11-24 22:48:54
+security-review,start,2026-11-24 22:48:54
+security-review-and-repair,end,2026-11-24 22:58:28
+final-regression,start,2026-11-24 22:58:28
+final-regression,end,2026-11-24 22:59:30

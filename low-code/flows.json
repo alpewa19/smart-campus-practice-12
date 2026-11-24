@@ -1,0 +1,829 @@
+[
+    {
+        "id": "tab_checker",
+        "type": "tab",
+        "label": "Smart Campus checker",
+        "disabled": false,
+        "info": "Practice 12 low-code version of the Cedar 101 room availability checker. Same contract as the code-based version: contract/requirements.md. Fictional data and the demo clock are flow environment variables: they exist before the first request arrives and no node can change them at runtime.",
+        "env": [
+            {
+                "name": "BOOKINGS",
+                "value": "[{\"id\":\"B1\",\"start\":600,\"end\":660,\"label\":\"Fictional study group\"},{\"id\":\"B2\",\"start\":780,\"end\":870,\"label\":\"Fictional robotics club\"}]",
+                "type": "json"
+            },
+            {
+                "name": "DEMO_NOW",
+                "value": "540",
+                "type": "num"
+            }
+        ]
+    },
+    {
+        "id": "cmt_data",
+        "type": "comment",
+        "z": "tab_checker",
+        "name": "1. Fictional data = flow env variables BOOKINGS, DEMO_NOW (read-only)",
+        "info": "",
+        "x": 190,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "inj_load",
+        "type": "inject",
+        "z": "tab_checker",
+        "name": "Show room card on start",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "0.2",
+        "topic": "",
+        "x": 190,
+        "y": 80,
+        "wires": [
+            [
+                "chg_data"
+            ]
+        ]
+    },
+    {
+        "id": "chg_data",
+        "type": "change",
+        "z": "tab_checker",
+        "name": "Room card data",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{ \"now\": $env(\"DEMO_NOW\"), \"bookings\": $env(\"BOOKINGS\") }",
+                "tot": "jsonata"
+            }
+        ],
+        "x": 460,
+        "y": 80,
+        "wires": [
+            [
+                "tpl_room"
+            ]
+        ]
+    },
+    {
+        "id": "tpl_room",
+        "type": "ui-template",
+        "z": "tab_checker",
+        "group": "grp_room",
+        "page": "",
+        "ui": "",
+        "name": "Room card",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "head": "",
+        "format": "<template>\n  <div class=\"room\">\n    <p class=\"clock\">Demo clock: now = <strong>{{ fmt(msg?.payload?.now ?? 540) }}</strong></p>\n    <p class=\"sub\">Existing bookings</p>\n    <ul>\n      <li v-for=\"b in (msg?.payload?.bookings || [])\" :key=\"b.id\">{{ b.id }} · {{ fmt(b.start) }}–{{ fmt(b.end) }} · {{ b.label }}</li>\n    </ul>\n    <p class=\"note\">Fictional data only. A check never creates or changes a booking.</p>\n  </div>\n</template>\n<script>\nexport default {\n  methods: {\n    fmt (m) { return String(Math.floor(m / 60)).padStart(2, '0') + ':' + String(m % 60).padStart(2, '0') }\n  }\n}\n</script>\n<style scoped>\n.room p { margin: 0 0 6px; }\n.clock, .note { color: #5d6878; font-size: 14px; }\n.sub { font-weight: 600; font-size: 14px; color: #5d6878; margin-top: 10px !important; }\nul { margin: 0 0 8px; padding-left: 18px; }\n</style>",
+        "storeOutMessages": true,
+        "passthru": false,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 700,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "cmt_ui",
+        "type": "comment",
+        "z": "tab_checker",
+        "name": "2. Dashboard form -> shared decision -> result card",
+        "info": "",
+        "x": 230,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "frm_check",
+        "type": "ui-form",
+        "z": "tab_checker",
+        "name": "Check a time slot",
+        "group": "grp_check",
+        "label": "",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "options": [
+            {
+                "label": "Start time (HH:MM)",
+                "key": "start",
+                "type": "text",
+                "required": false,
+                "rows": null
+            },
+            {
+                "label": "Duration (minutes, 1–120)",
+                "key": "duration",
+                "type": "text",
+                "required": false,
+                "rows": null
+            },
+            {
+                "label": "Room blocked",
+                "key": "blocked",
+                "type": "switch",
+                "required": false,
+                "rows": null
+            }
+        ],
+        "formValue": {
+            "start": "",
+            "duration": "",
+            "blocked": false
+        },
+        "payload": "",
+        "submit": "Check availability",
+        "cancel": "Clear",
+        "resetOnSubmit": false,
+        "topic": "topic",
+        "topicType": "msg",
+        "splitLayout": "",
+        "className": "",
+        "passthru": false,
+        "dropdownOptions": [],
+        "x": 160,
+        "y": 200,
+        "wires": [
+            [
+                "chg_form_req"
+            ]
+        ]
+    },
+    {
+        "id": "chg_form_req",
+        "type": "change",
+        "z": "tab_checker",
+        "name": "Form -> request",
+        "rules": [
+            {
+                "t": "set",
+                "p": "req",
+                "pt": "msg",
+                "to": "{ \"start\": payload.start, \"duration\": payload.duration, \"blocked\": payload.blocked = true }",
+                "tot": "jsonata"
+            }
+        ],
+        "x": 370,
+        "y": 200,
+        "wires": [
+            [
+                "call_decide_ui"
+            ]
+        ]
+    },
+    {
+        "id": "call_decide_ui",
+        "type": "link call",
+        "z": "tab_checker",
+        "name": "Decide availability",
+        "links": [
+            "lin_decide"
+        ],
+        "linkType": "static",
+        "timeout": "5",
+        "x": 580,
+        "y": 200,
+        "wires": [
+            [
+                "tpl_result"
+            ]
+        ]
+    },
+    {
+        "id": "tpl_result",
+        "type": "ui-template",
+        "z": "tab_checker",
+        "group": "grp_check",
+        "page": "",
+        "ui": "",
+        "name": "Result card",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "head": "",
+        "format": "<template>\n  <div v-if=\"msg && msg.payload && msg.payload.reasonCode\" :class=\"['result', msg.payload.available ? 'ok' : 'no']\" role=\"status\" aria-live=\"polite\">\n    <p class=\"verdict\">{{ msg.payload.available ? 'Available' : 'Unavailable' }}</p>\n    <p class=\"message\">{{ msg.payload.message }}</p>\n    <p class=\"code\">Reason code: <code class=\"reason\">{{ msg.payload.reasonCode }}</code></p>\n  </div>\n</template>\n<style scoped>\n.result { padding: 14px; border-radius: 10px; border: 1px solid; width: 100%; }\n.result p { margin: 0 0 6px; }\n.ok { background: #e8f7ef; color: #136c3e; border-color: #9fd9b8; }\n.no { background: #fdecec; color: #a3261f; border-color: #f0b4b0; }\n.verdict { font-size: 18px; font-weight: 700; }\n.code { font-size: 13px; opacity: .85; }\n</style>",
+        "storeOutMessages": false,
+        "passthru": false,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "className": "",
+        "x": 790,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "cmt_api",
+        "type": "comment",
+        "z": "tab_checker",
+        "name": "3. Local test endpoints (same decision flow)",
+        "info": "",
+        "x": 200,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "http_check",
+        "type": "http in",
+        "z": "tab_checker",
+        "name": "",
+        "url": "/api/check",
+        "method": "post",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 150,
+        "y": 320,
+        "wires": [
+            [
+                "chg_api_req"
+            ]
+        ]
+    },
+    {
+        "id": "chg_api_req",
+        "type": "change",
+        "z": "tab_checker",
+        "name": "Body -> request",
+        "rules": [
+            {
+                "t": "set",
+                "p": "req",
+                "pt": "msg",
+                "to": "{ \"start\": payload.start, \"duration\": payload.duration, \"blocked\": payload.blocked = true }",
+                "tot": "jsonata"
+            }
+        ],
+        "x": 370,
+        "y": 320,
+        "wires": [
+            [
+                "call_decide_api"
+            ]
+        ]
+    },
+    {
+        "id": "call_decide_api",
+        "type": "link call",
+        "z": "tab_checker",
+        "name": "Decide availability",
+        "links": [
+            "lin_decide"
+        ],
+        "linkType": "static",
+        "timeout": "5",
+        "x": 580,
+        "y": 320,
+        "wires": [
+            [
+                "resp_check"
+            ]
+        ]
+    },
+    {
+        "id": "resp_check",
+        "type": "http response",
+        "z": "tab_checker",
+        "name": "JSON decision",
+        "statusCode": "200",
+        "headers": {
+            "content-type": "application/json"
+        },
+        "x": 790,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "http_bookings",
+        "type": "http in",
+        "z": "tab_checker",
+        "name": "",
+        "url": "/api/bookings",
+        "method": "get",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 160,
+        "y": 380,
+        "wires": [
+            [
+                "chg_bookings"
+            ]
+        ]
+    },
+    {
+        "id": "chg_bookings",
+        "type": "change",
+        "z": "tab_checker",
+        "name": "Read bookings",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "$env(\"BOOKINGS\")",
+                "tot": "jsonata"
+            }
+        ],
+        "x": 370,
+        "y": 380,
+        "wires": [
+            [
+                "resp_bookings"
+            ]
+        ]
+    },
+    {
+        "id": "resp_bookings",
+        "type": "http response",
+        "z": "tab_checker",
+        "name": "JSON bookings",
+        "statusCode": "200",
+        "headers": {
+            "content-type": "application/json"
+        },
+        "x": 790,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "cmt_rules",
+        "type": "comment",
+        "z": "tab_checker",
+        "name": "4. Decide availability: rules in contract order (first match wins)",
+        "info": "INVALID_START -> INVALID_DURATION -> PAST_START -> ENDS_AFTER_DAY -> ROOM_BLOCKED -> OVERLAP -> AVAILABLE",
+        "x": 270,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "lin_decide",
+        "type": "link in",
+        "z": "tab_checker",
+        "name": "decide",
+        "links": [],
+        "x": 105,
+        "y": 600,
+        "wires": [
+            [
+                "chg_parse"
+            ]
+        ]
+    },
+    {
+        "id": "chg_parse",
+        "type": "change",
+        "z": "tab_checker",
+        "name": "Parse start and duration",
+        "rules": [
+            {
+                "t": "set",
+                "p": "startMin",
+                "pt": "msg",
+                "to": "$type(req.start) = \"string\" and $contains(req.start, /^([01][0-9]|2[0-3]):[0-5][0-9]$/) ? $number($substring(req.start, 0, 2)) * 60 + $number($substring(req.start, 3, 2)) : null",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "duration",
+                "pt": "msg",
+                "to": "($d := $type(req.duration) = \"number\" ? $string(req.duration) : req.duration; $type($d) = \"string\" and $contains($d, /^[0-9]{1,4}$/) and $number($d) >= 1 and $number($d) <= 120 ? $number($d) : null)",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "endMin",
+                "pt": "msg",
+                "to": "startMin != null and duration != null ? startMin + duration : null",
+                "tot": "jsonata"
+            }
+        ],
+        "x": 260,
+        "y": 600,
+        "wires": [
+            [
+                "sw_rules"
+            ]
+        ]
+    },
+    {
+        "id": "sw_rules",
+        "type": "switch",
+        "z": "tab_checker",
+        "name": "Validate, then room status",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "jsonata_exp",
+                "v": "startMin = null",
+                "vt": "jsonata"
+            },
+            {
+                "t": "jsonata_exp",
+                "v": "duration = null",
+                "vt": "jsonata"
+            },
+            {
+                "t": "jsonata_exp",
+                "v": "startMin <= $env(\"DEMO_NOW\")",
+                "vt": "jsonata"
+            },
+            {
+                "t": "jsonata_exp",
+                "v": "endMin > 1440",
+                "vt": "jsonata"
+            },
+            {
+                "t": "jsonata_exp",
+                "v": "req.blocked = true",
+                "vt": "jsonata"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 6,
+        "x": 490,
+        "y": 600,
+        "wires": [
+            [
+                "chg_invalid_start"
+            ],
+            [
+                "chg_invalid_duration"
+            ],
+            [
+                "chg_past"
+            ],
+            [
+                "chg_day_end"
+            ],
+            [
+                "chg_blocked"
+            ],
+            [
+                "chg_overlap_find"
+            ]
+        ]
+    },
+    {
+        "id": "chg_invalid_start",
+        "type": "change",
+        "z": "tab_checker",
+        "name": "INVALID_START",
+        "rules": [
+            {
+                "t": "set",
+                "p": "reasonCode",
+                "pt": "msg",
+                "to": "INVALID_START",
+                "tot": "str"
+            }
+        ],
+        "x": 740,
+        "y": 500,
+        "wires": [
+            [
+                "chg_build"
+            ]
+        ]
+    },
+    {
+        "id": "chg_invalid_duration",
+        "type": "change",
+        "z": "tab_checker",
+        "name": "INVALID_DURATION",
+        "rules": [
+            {
+                "t": "set",
+                "p": "reasonCode",
+                "pt": "msg",
+                "to": "INVALID_DURATION",
+                "tot": "str"
+            }
+        ],
+        "x": 750,
+        "y": 540,
+        "wires": [
+            [
+                "chg_build"
+            ]
+        ]
+    },
+    {
+        "id": "chg_past",
+        "type": "change",
+        "z": "tab_checker",
+        "name": "PAST_START",
+        "rules": [
+            {
+                "t": "set",
+                "p": "reasonCode",
+                "pt": "msg",
+                "to": "PAST_START",
+                "tot": "str"
+            }
+        ],
+        "x": 730,
+        "y": 580,
+        "wires": [
+            [
+                "chg_build"
+            ]
+        ]
+    },
+    {
+        "id": "chg_day_end",
+        "type": "change",
+        "z": "tab_checker",
+        "name": "ENDS_AFTER_DAY",
+        "rules": [
+            {
+                "t": "set",
+                "p": "reasonCode",
+                "pt": "msg",
+                "to": "ENDS_AFTER_DAY",
+                "tot": "str"
+            }
+        ],
+        "x": 740,
+        "y": 620,
+        "wires": [
+            [
+                "chg_build"
+            ]
+        ]
+    },
+    {
+        "id": "chg_blocked",
+        "type": "change",
+        "z": "tab_checker",
+        "name": "ROOM_BLOCKED",
+        "rules": [
+            {
+                "t": "set",
+                "p": "reasonCode",
+                "pt": "msg",
+                "to": "ROOM_BLOCKED",
+                "tot": "str"
+            }
+        ],
+        "x": 740,
+        "y": 660,
+        "wires": [
+            [
+                "chg_build"
+            ]
+        ]
+    },
+    {
+        "id": "chg_overlap_find",
+        "type": "change",
+        "z": "tab_checker",
+        "name": "Find overlapping booking",
+        "rules": [
+            {
+                "t": "set",
+                "p": "overlap",
+                "pt": "msg",
+                "to": "($s := startMin; $e := endMin; $env(\"BOOKINGS\")[start < $e and $s < end][0])",
+                "tot": "jsonata"
+            }
+        ],
+        "x": 770,
+        "y": 720,
+        "wires": [
+            [
+                "sw_overlap"
+            ]
+        ]
+    },
+    {
+        "id": "sw_overlap",
+        "type": "switch",
+        "z": "tab_checker",
+        "name": "Overlap?",
+        "property": "overlap",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "nnull"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 2,
+        "x": 960,
+        "y": 720,
+        "wires": [
+            [
+                "chg_overlap"
+            ],
+            [
+                "chg_available"
+            ]
+        ]
+    },
+    {
+        "id": "chg_overlap",
+        "type": "change",
+        "z": "tab_checker",
+        "name": "OVERLAP",
+        "rules": [
+            {
+                "t": "set",
+                "p": "reasonCode",
+                "pt": "msg",
+                "to": "OVERLAP",
+                "tot": "str"
+            }
+        ],
+        "x": 1110,
+        "y": 700,
+        "wires": [
+            [
+                "chg_build"
+            ]
+        ]
+    },
+    {
+        "id": "chg_available",
+        "type": "change",
+        "z": "tab_checker",
+        "name": "AVAILABLE",
+        "rules": [
+            {
+                "t": "set",
+                "p": "reasonCode",
+                "pt": "msg",
+                "to": "AVAILABLE",
+                "tot": "str"
+            }
+        ],
+        "x": 1110,
+        "y": 740,
+        "wires": [
+            [
+                "chg_build"
+            ]
+        ]
+    },
+    {
+        "id": "chg_build",
+        "type": "change",
+        "z": "tab_checker",
+        "name": "Build decision + message",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "(\n  $fmt := function($m) { $pad($string($floor($m / 60)), -2, \"0\") & \":\" & $pad($string($m % 60), -2, \"0\") };\n  $code := reasonCode;\n  {\n    \"available\": $code = \"AVAILABLE\",\n    \"reasonCode\": $code,\n    \"message\":\n      $code = \"AVAILABLE\" ? \"Available: Cedar 101 is free from \" & $fmt(startMin) & \" to \" & $fmt(endMin) & \".\" :\n      $code = \"OVERLAP\" ? \"Unavailable: the request overlaps booking \" & overlap.id & \" (\" & $fmt(overlap.start) & \"–\" & $fmt(overlap.end) & \").\" :\n      $code = \"ROOM_BLOCKED\" ? \"Unavailable: Cedar 101 is blocked and cannot be booked.\" :\n      $code = \"INVALID_START\" ? \"Enter the start time as HH:MM (24-hour clock).\" :\n      $code = \"INVALID_DURATION\" ? \"Duration must be a whole number of minutes from 1 to 120.\" :\n      $code = \"PAST_START\" ? \"Start time must be later than the current time (\" & $fmt($env(\"DEMO_NOW\")) & \").\" :\n      \"The booking must end by 24:00 on the same day.\"\n  }\n)",
+                "tot": "jsonata"
+            }
+        ],
+        "x": 1110,
+        "y": 600,
+        "wires": [
+            [
+                "lout_decide"
+            ]
+        ]
+    },
+    {
+        "id": "lout_decide",
+        "type": "link out",
+        "z": "tab_checker",
+        "name": "return",
+        "mode": "return",
+        "links": [],
+        "x": 1265,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "ui_base",
+        "type": "ui-base",
+        "name": "Smart Campus",
+        "path": "/dashboard",
+        "appIcon": "",
+        "includeClientData": true,
+        "acceptsClientConfig": [
+            "ui-template",
+            "ui-form"
+        ],
+        "showPathInSidebar": false,
+        "headerContent": "page",
+        "navigationStyle": "none",
+        "titleBarStyle": "default",
+        "showReconnectNotification": true,
+        "notificationDisplayTime": 1,
+        "showDisconnectNotification": true,
+        "allowInstall": false
+    },
+    {
+        "id": "ui_theme",
+        "type": "ui-theme",
+        "name": "Campus theme",
+        "colors": {
+            "surface": "#2459d6",
+            "primary": "#2459d6",
+            "bgPage": "#f4f6f9",
+            "groupBg": "#ffffff",
+            "groupOutline": "#dfe3ea"
+        },
+        "sizes": {
+            "density": "default",
+            "pagePadding": "16px",
+            "groupGap": "16px",
+            "groupBorderRadius": "12px",
+            "widgetGap": "12px"
+        }
+    },
+    {
+        "id": "ui_page",
+        "type": "ui-page",
+        "name": "Room Availability Checker (low-code)",
+        "ui": "ui_base",
+        "path": "/checker",
+        "icon": "calendar",
+        "layout": "grid",
+        "theme": "ui_theme",
+        "breakpoints": [
+            {
+                "name": "Default",
+                "px": 0,
+                "cols": 3
+            },
+            {
+                "name": "Tablet",
+                "px": 576,
+                "cols": 6
+            },
+            {
+                "name": "Small Desktop",
+                "px": 768,
+                "cols": 9
+            },
+            {
+                "name": "Desktop",
+                "px": 1024,
+                "cols": 12
+            }
+        ],
+        "tabs": [],
+        "order": 1,
+        "className": "",
+        "visible": "true",
+        "disabled": "false"
+    },
+    {
+        "id": "grp_room",
+        "type": "ui-group",
+        "name": "Cedar 101",
+        "page": "ui_page",
+        "width": "6",
+        "height": "1",
+        "order": 1,
+        "showTitle": true,
+        "className": "",
+        "visible": "true",
+        "disabled": "false",
+        "groupType": "default",
+        "keepLoaded": false,
+        "tab": ""
+    },
+    {
+        "id": "grp_check",
+        "type": "ui-group",
+        "name": "Check a time slot",
+        "page": "ui_page",
+        "width": "6",
+        "height": "1",
+        "order": 2,
+        "showTitle": true,
+        "className": "",
+        "visible": "true",
+        "disabled": "false",
+        "groupType": "default",
+        "keepLoaded": false,
+        "tab": ""
+    }
+]

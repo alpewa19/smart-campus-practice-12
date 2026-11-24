@@ -1,0 +1,9 @@
+# R3 code-based: non-boolean blocked value
+$ node -e "import('./code-based/src/availability.js').then(m => console.log(m.checkAvailability({start:900,end:960},{blocked:'false'},[])))"
+{"available":false,"reasonCode":"ROOM_BLOCKED"}
+
+# R4 low-code: requests during start-up (before the 0.2 s inject loads data)
+request start=10:30 duration=60 (expected OVERLAP); first answer: OVERLAP
+answers by reasonCode: {'OVERLAP': 21}
+
+# NOTE: the R4 part above is INVALID - it hit the previous server (see 12d log). Valid rerun: 32-verify-r4-and-direct-start.log

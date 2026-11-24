@@ -1,0 +1,23 @@
+{
+  "now": "09:00",
+  "room": "Cedar 101",
+  "bookings": [
+    { "id": "B1", "start": "10:00", "end": "11:00" },
+    { "id": "B2", "start": "13:00", "end": "14:30" }
+  ],
+  "cases": [
+    { "id": "T1", "start": "15:00", "duration": "60", "blocked": false, "reasonCode": "AVAILABLE", "available": true },
+    { "id": "T2", "start": "10:30", "duration": "60", "blocked": false, "reasonCode": "OVERLAP", "available": false },
+    { "id": "T3", "start": "15:00", "duration": "60", "blocked": true, "reasonCode": "ROOM_BLOCKED", "available": false },
+    { "id": "T4", "start": "15:00", "duration": "0", "blocked": false, "reasonCode": "INVALID_DURATION", "available": false },
+    { "id": "T5", "start": "15:00", "duration": "121", "blocked": false, "reasonCode": "INVALID_DURATION", "available": false },
+    { "id": "T6", "start": "08:00", "duration": "30", "blocked": false, "reasonCode": "PAST_START", "available": false },
+    { "id": "T7", "start": "11:00", "duration": "120", "blocked": false, "reasonCode": "AVAILABLE", "available": true }
+  ],
+  "securityCases": [
+    { "id": "S1", "start": "<img src=x onerror=alert(1)>", "duration": "60", "blocked": false, "reasonCode": "INVALID_START", "available": false },
+    { "id": "S2", "start": "15:00", "duration": "60.5", "blocked": false, "reasonCode": "INVALID_DURATION", "available": false },
+    { "id": "S3", "start": "23:30", "duration": "60", "blocked": false, "reasonCode": "ENDS_AFTER_DAY", "available": false },
+    { "id": "S4", "start": "", "duration": "60", "blocked": false, "reasonCode": "INVALID_START", "available": false }
+  ]
+}

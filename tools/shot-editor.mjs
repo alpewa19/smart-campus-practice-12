@@ -1,0 +1,10 @@
+import { launch } from './browser.mjs'
+const [base, out] = process.argv.slice(2)
+const b = await launch(9343)
+await b.viewport(1600, 900)
+await b.open(base + '/', 4000)
+await b.waitFor(`document.querySelectorAll('.red-ui-flow-node-group, g.red-ui-flow-node').length > 10`, 15000)
+await b.eval(`(() => { document.querySelectorAll('.red-ui-notification, .red-ui-tourGuide-popover').forEach(e => e.remove()); RED.actions.invoke("core:toggle-sidebar"); RED.actions.invoke("core:toggle-palette"); RED.actions.invoke("core:zoom-out"); RED.actions.invoke("core:zoom-out") })()`)
+await b.sleep(500)
+await b.shot(out, false)
+await b.close()

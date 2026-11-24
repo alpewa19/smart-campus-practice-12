@@ -1,0 +1,10 @@
+node_modules/
+baseline/p11-copy/
+low-code/.config.*.json
+low-code/.config.*.json.backup
+low-code/.flows*.backup
+low-code/lib/
+low-code/context/
+.DS_Store
+report/*.html
+Submission.md

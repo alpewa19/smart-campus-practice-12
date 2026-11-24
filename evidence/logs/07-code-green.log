@@ -1,0 +1,33 @@
+$ npm test   (after src/ implementation)
+
+> smart-campus-code-based@1.0.0 test
+> node --test tests/
+
+✔ fictional data matches the shared contract (0.95575ms)
+✔ T1: start="15:00" duration=60 blocked=false -> AVAILABLE (0.242917ms)
+✔ T2: start="10:30" duration=60 blocked=false -> OVERLAP (0.093625ms)
+✔ T3: start="15:00" duration=60 blocked=true -> ROOM_BLOCKED (0.056625ms)
+✔ T4: start="15:00" duration=0 blocked=false -> INVALID_DURATION (0.067209ms)
+✔ T5: start="15:00" duration=121 blocked=false -> INVALID_DURATION (0.074041ms)
+✔ T6: start="08:00" duration=30 blocked=false -> PAST_START (0.054584ms)
+✔ T7: start="11:00" duration=120 blocked=false -> AVAILABLE (0.054791ms)
+✔ S1: start="<img src=x onerror=alert(1)>" duration=60 blocked=false -> INVALID_START (0.066125ms)
+✔ S2: start="15:00" duration=60.5 blocked=false -> INVALID_DURATION (0.0845ms)
+✔ S3: start="23:30" duration=60 blocked=false -> ENDS_AFTER_DAY (0.059333ms)
+✔ S4: start="" duration=60 blocked=false -> INVALID_START (0.039ms)
+✔ T8: bookings are unchanged after running T1-T7 (0.102291ms)
+✔ parseClock accepts only HH:MM within one day (0.520709ms)
+✔ parseDuration accepts whole minutes 1..120 only (0.151375ms)
+✔ validateRequest applies rules in contract order (0.397042ms)
+✔ findOverlap uses half-open intervals (0.086375ms)
+✔ blocked room wins over overlap (0.073958ms)
+✔ every reason code has a message, unknown codes fail loudly (0.213833ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 96.287333
+exit=0

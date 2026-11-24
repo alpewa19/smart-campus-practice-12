@@ -1,0 +1,19 @@
+# R1: login configured?
+$ curl -s http://127.0.0.1:1880/auth/login
+{}
+
+# R10: local static server headers and directory listing
+$ curl -sI http://127.0.0.1:8012/ | head -6
+HTTP/1.0 200 OK
+Server: SimpleHTTP/0.6 Python/3.14.6
+Date: Tue, 24 Nov 2026 18:00:19 GMT
+Content-type: text/html
+Content-Length: 2130
+Last-Modified: Tue, 24 Nov 2026 17:44:10 GMT
+$ curl -s http://127.0.0.1:8012/tests/ | grep -o 'href="[^"]*"'
+href="contract.test.js"
+href="units.test.js"
+
+# R9: last branch of the message builder
+\"The booking must end by 24:00 on the same day.\"\n  }
+['      "The booking must end by 24:00 on the same day."', '  }', ')']

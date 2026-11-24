@@ -1,0 +1,27 @@
+
+> smart-campus-low-code@1.0.0 start
+> NODE_ENV=production node-red --settings ./settings.js --userDir . flows.json
+
+24 Nov 22:57:49 - [info] 
+
+Welcome to Node-RED
+===================
+
+24 Nov 22:57:49 - [info] Node-RED version: v5.0.9
+24 Nov 22:57:49 - [info] Node.js  version: v26.13.0
+24 Nov 22:57:49 - [info] Darwin 25.5.0 arm64 LE
+24 Nov 22:57:49 - [info] Palette editor disabled : user settings
+24 Nov 22:57:49 - [info] Loading palette nodes
+24 Nov 22:57:49 - [info] Settings file  : /Users/ruslanalpenov/kbtu/kbtu/output/practice12_lowcode_comparison/low-code/settings.js
+24 Nov 22:57:49 - [info] Context store  : 'default' [module=memory]
+24 Nov 22:57:49 - [info] User directory : /Users/ruslanalpenov/kbtu/kbtu/output/practice12_lowcode_comparison/low-code
+24 Nov 22:57:49 - [warn] Projects disabled : editorTheme.projects.enabled=false
+24 Nov 22:57:49 - [info] Flows file     : /Users/ruslanalpenov/kbtu/kbtu/output/practice12_lowcode_comparison/low-code/flows.json
+24 Nov 22:57:49 - [warn] Using unencrypted credentials
+24 Nov 22:57:49 - [info] Server now running at http://127.0.0.1:1880/
+24 Nov 22:57:49 - [info] Starting flows
+24 Nov 22:57:49 - [info] [ui-base:Smart Campus] Node-RED Dashboard 2.0 (v1.36.0) started at /dashboard
+24 Nov 22:57:49 - [info] [ui-base:Smart Campus] Created socket.io server bound to Node-RED port at path /dashboard/socket.io
+24 Nov 22:57:50 - [info] Started flows
+24 Nov 22:58:05 - [info] Stopping flows
+24 Nov 22:58:05 - [info] Stopped flows

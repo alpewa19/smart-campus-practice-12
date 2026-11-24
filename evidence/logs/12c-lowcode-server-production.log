@@ -1,0 +1,50 @@
+
+> smart-campus-low-code@1.0.0 start
+> NODE_ENV=production node-red --settings ./settings.js --userDir . flows.json
+
+24 Nov 22:50:28 - [info] 
+
+Welcome to Node-RED
+===================
+
+24 Nov 22:50:28 - [info] Node-RED version: v5.0.9
+24 Nov 22:50:28 - [info] Node.js  version: v26.13.0
+24 Nov 22:50:28 - [info] Darwin 25.5.0 arm64 LE
+24 Nov 22:50:28 - [info] Palette editor disabled : user settings
+24 Nov 22:50:28 - [info] Loading palette nodes
+24 Nov 22:50:28 - [info] Settings file  : /Users/ruslanalpenov/kbtu/kbtu/output/practice12_lowcode_comparison/low-code/settings.js
+24 Nov 22:50:28 - [info] Context store  : 'default' [module=memory]
+24 Nov 22:50:28 - [info] User directory : /Users/ruslanalpenov/kbtu/kbtu/output/practice12_lowcode_comparison/low-code
+24 Nov 22:50:28 - [warn] Projects disabled : editorTheme.projects.enabled=false
+24 Nov 22:50:28 - [info] Flows file     : /Users/ruslanalpenov/kbtu/kbtu/output/practice12_lowcode_comparison/low-code/flows.json
+24 Nov 22:50:28 - [warn] Using unencrypted credentials
+24 Nov 22:50:28 - [info] Server now running at http://127.0.0.1:1880/
+24 Nov 22:50:28 - [info] Starting flows
+24 Nov 22:50:28 - [info] [ui-base:Smart Campus] Node-RED Dashboard 2.0 (v1.36.0) started at /dashboard
+24 Nov 22:50:28 - [info] [ui-base:Smart Campus] Created socket.io server bound to Node-RED port at path /dashboard/socket.io
+24 Nov 22:50:28 - [info] Started flows
+SyntaxError: Expected property name or '}' in JSON at position 1 (line 1 column 2)
+    at JSON.parse (<anonymous>)
+    at parse (/Users/ruslanalpenov/kbtu/kbtu/output/practice12_lowcode_comparison/low-code/node_modules/@node-red/editor-api/node_modules/body-parser/lib/types/json.js:96:19)
+    at /Users/ruslanalpenov/kbtu/kbtu/output/practice12_lowcode_comparison/low-code/node_modules/@node-red/editor-api/node_modules/body-parser/lib/read.js:128:18
+    at AsyncResource.runInAsyncScope (node:async_hooks:226:14)
+    at invokeCallback (/Users/ruslanalpenov/kbtu/kbtu/output/practice12_lowcode_comparison/low-code/node_modules/raw-body/index.js:238:16)
+    at done (/Users/ruslanalpenov/kbtu/kbtu/output/practice12_lowcode_comparison/low-code/node_modules/raw-body/index.js:227:7)
+    at IncomingMessage.onEnd (/Users/ruslanalpenov/kbtu/kbtu/output/practice12_lowcode_comparison/low-code/node_modules/raw-body/index.js:287:7)
+    at IncomingMessage.emit (node:events:514:20)
+    at endReadableNT (node:internal/streams/readable:2147:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+24 Nov 22:51:47 - [info] [ui-base:Smart Campus] Disconnected v2RS6UFvCd1VAdqhAAAA due to transport close
+SyntaxError: Expected property name or '}' in JSON at position 1 (line 1 column 2)
+    at JSON.parse (<anonymous>)
+    at parse (/Users/ruslanalpenov/kbtu/kbtu/output/practice12_lowcode_comparison/low-code/node_modules/@node-red/editor-api/node_modules/body-parser/lib/types/json.js:96:19)
+    at /Users/ruslanalpenov/kbtu/kbtu/output/practice12_lowcode_comparison/low-code/node_modules/@node-red/editor-api/node_modules/body-parser/lib/read.js:128:18
+    at AsyncResource.runInAsyncScope (node:async_hooks:226:14)
+    at invokeCallback (/Users/ruslanalpenov/kbtu/kbtu/output/practice12_lowcode_comparison/low-code/node_modules/raw-body/index.js:238:16)
+    at done (/Users/ruslanalpenov/kbtu/kbtu/output/practice12_lowcode_comparison/low-code/node_modules/raw-body/index.js:227:7)
+    at IncomingMessage.onEnd (/Users/ruslanalpenov/kbtu/kbtu/output/practice12_lowcode_comparison/low-code/node_modules/raw-body/index.js:287:7)
+    at IncomingMessage.emit (node:events:514:20)
+    at endReadableNT (node:internal/streams/readable:2147:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+24 Nov 22:57:06 - [info] Stopping flows
+24 Nov 22:57:06 - [info] Stopped flows

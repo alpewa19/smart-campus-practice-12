@@ -1,0 +1,4 @@
+7c7
+<     "start": "node-red --settings ./settings.js --userDir . flows.json"
+---
+>     "start": "NODE_ENV=production node-red --settings ./settings.js --userDir . flows.json"

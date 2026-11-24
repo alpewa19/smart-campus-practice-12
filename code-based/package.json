@@ -1,0 +1,11 @@
+{
+  "name": "smart-campus-code-based",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Practice 12: code-based Smart Campus room availability checker (no dependencies)",
+  "scripts": {
+    "test": "node --test tests/",
+    "start": "python3 -m http.server 8012 --bind 127.0.0.1"
+  }
+}

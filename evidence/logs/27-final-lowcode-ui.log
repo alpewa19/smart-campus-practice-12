@@ -1,0 +1,13 @@
+PASS T1 expected=AVAILABLE observed=AVAILABLE
+PASS T2 expected=OVERLAP observed=OVERLAP
+PASS T3 expected=ROOM_BLOCKED observed=ROOM_BLOCKED
+PASS T4 expected=INVALID_DURATION observed=INVALID_DURATION
+PASS T5 expected=INVALID_DURATION observed=INVALID_DURATION
+PASS T6 expected=PAST_START observed=PAST_START
+PASS T7 expected=AVAILABLE observed=AVAILABLE
+PASS S1 expected=INVALID_START observed=INVALID_START
+PASS S2 expected=INVALID_DURATION observed=INVALID_DURATION
+PASS S3 expected=ENDS_AFTER_DAY observed=ENDS_AFTER_DAY
+PASS S4 expected=INVALID_START observed=INVALID_START
+PASS T8 expected=bookings unchanged observed=bookings unchanged
+passed 12/12; dialogs=0; mobileOverflow=false

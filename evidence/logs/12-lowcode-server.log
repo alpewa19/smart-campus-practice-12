@@ -1,0 +1,28 @@
+24 Nov 22:47:24 - [info] 
+
+Welcome to Node-RED
+===================
+
+24 Nov 22:47:24 - [info] Node-RED version: v5.0.9
+24 Nov 22:47:24 - [info] Node.js  version: v26.13.0
+24 Nov 22:47:24 - [info] Darwin 25.5.0 arm64 LE
+24 Nov 22:47:24 - [info] Palette editor disabled : user settings
+24 Nov 22:47:24 - [info] Loading palette nodes
+24 Nov 22:47:25 - [info] Settings file  : /Users/ruslanalpenov/kbtu/kbtu/output/practice12_lowcode_comparison/low-code/settings.js
+24 Nov 22:47:25 - [info] Context store  : 'default' [module=memory]
+24 Nov 22:47:25 - [info] User directory : /Users/ruslanalpenov/kbtu/kbtu/output/practice12_lowcode_comparison/low-code
+24 Nov 22:47:25 - [warn] Projects disabled : editorTheme.projects.enabled=false
+24 Nov 22:47:25 - [info] Flows file     : /Users/ruslanalpenov/kbtu/kbtu/output/practice12_lowcode_comparison/low-code/flows.json
+24 Nov 22:47:25 - [warn] Using unencrypted credentials
+24 Nov 22:47:25 - [info] Server now running at http://127.0.0.1:1880/
+24 Nov 22:47:25 - [info] Starting flows
+24 Nov 22:47:25 - [info] [ui-base:Smart Campus] Node-RED Dashboard 2.0 (v1.36.0) started at /dashboard
+24 Nov 22:47:25 - [info] [ui-base:Smart Campus] Created socket.io server bound to Node-RED port at path /dashboard/socket.io
+24 Nov 22:47:25 - [info] Started flows
+24 Nov 22:47:54 - [info] [ui-base:Smart Campus] Disconnected ppwIxINCnjrjktEvAAAA due to transport close
+24 Nov 22:48:28 - [info] [ui-base:Smart Campus] Disconnected ksS74ow2T9qI_7tOAAAB due to transport close
+24 Nov 22:48:34 - [info] [ui-base:Smart Campus] Disconnected 9dVBpbNBlkVb1mOOAAAC due to transport close
+24 Nov 22:49:07 - [info] [ui-base:Smart Campus] Disconnected _0cacug1gouBXu5sAAAD due to transport close
+24 Nov 22:49:07 - [info] [ui-base:Smart Campus] Disconnected hvhMjPYlKReWRSCDAAAE due to transport close
+24 Nov 22:49:16 - [info] Stopping flows
+24 Nov 22:49:16 - [info] Stopped flows
