@@ -1,11 +1,15 @@
 """Builds report/Practice12_Alpenov_Ruslan_Report.pdf from report/Practice12_Report.md via headless Chrome."""
-import re, subprocess
+import os, re, subprocess
 from pathlib import Path
 import markdown
 
 ROOT = Path(__file__).resolve().parent.parent
 REPORT = ROOT / "report"
 md = (REPORT / "Practice12_Report.md").read_text(encoding="utf-8")
+# STUDENT_ID=... builds the emailed copy with the student ID; the public repository copy has no ID.
+STUDENT_ID = os.environ.get("STUDENT_ID", "").strip()
+if STUDENT_ID:
+    md = md.replace("**Student:** Ruslan Alpenov ·", f"**Student:** Ruslan Alpenov · **ID:** {STUDENT_ID} ·", 1)
 
 # Appendix A: screenshots of every test case, both versions.
 cases = ["T1", "T2", "T3", "T4", "T5", "T6", "T7", "S1", "S2", "S3", "S4"]
@@ -49,7 +53,8 @@ p > img { display: block; max-height: 120mm; margin: 2mm auto; }
 html = f'<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Practice Work 12 — Alpenov Ruslan</title><style>{css}</style></head><body>{body}</body></html>'
 out_html = REPORT / "Practice12_Report.html"
 out_html.write_text(html, encoding="utf-8")
-pdf = REPORT / "Practice12_Alpenov_Ruslan_Report.pdf"
+pdf = (ROOT / "submission" / f"Practice12_Alpenov_Ruslan_{STUDENT_ID}_Report.pdf") if STUDENT_ID else (REPORT / "Practice12_Alpenov_Ruslan_Report.pdf")
+pdf.parent.mkdir(exist_ok=True)
 subprocess.run(["/Applications/Google Chrome.app/Contents/MacOS/Google Chrome", "--headless=new", "--disable-gpu",
                 "--no-pdf-header-footer", f"--print-to-pdf={pdf}", out_html.as_uri()], check=True, capture_output=True)
 print(pdf)

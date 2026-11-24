@@ -132,7 +132,7 @@ The fictional bookings and the demo clock are flow **environment variables** (`B
 ![Node-RED flow](../evidence/screenshots/lowcode/editor-flow.png)
 
 I used expressions and scripts only where no widget setting could do the job:
-- six JSONata expressions: parse `HH:MM`, parse duration, end time, overlap search, switch conditions, message builder;
+- 14 short JSONata expressions. Ten carry the rules: parse `HH:MM`, parse duration, end time, five switch conditions, overlap search, message builder. Four only copy data between nodes (form or request body to `req`, room card data, bookings for the test endpoint);
 - one 3-line Vue method in the room card that formats minutes as `HH:MM`.
 
 **Incomplete or simulated (clearly labelled):**
